@@ -5,7 +5,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addplayer"
+        android:id="@+id/addPlayerButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/removeplayer"
+        android:id="@+id/removePlayerButton"
+        android:layout_above="@+id/playerListView"
+        android:layout_alignRight="@+id/playerListView"
+        android:layout_alignEnd="@+id/playerListView" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playerListView"
+        android:layout_below="@+id/addPlayerButton" />
 
 </RelativeLayout>

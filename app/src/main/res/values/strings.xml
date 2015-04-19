@@ -3,4 +3,12 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="lifetotal">X lives remaining</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="minusfive">-5</string>
+    <string name="plusfive">+5</string>
+    <string name="playername">Player X</string>
+    <string name="removeplayer">Remove Player</string>
+    <string name="addplayer">Add Player</string>
 </resources>
