@@ -1,5 +1,6 @@
 package edu.washington.hmask.lifecounter;
 
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,9 @@ public class MainActivity extends ActionBarActivity {
     private static final int INITIAL_PLAYERS_COUNT = 4;
     private static final int MIN_PLAYERS_COUNT = 2;
     private static final int MAX_PLAYERS_COUNT = 8;
+
+    private static final String SAVED_ADAPTER_INSTANCE = "savedAdapterInstance";
+
     private PlayerArrayAdapter adapter;
 
     @Override
@@ -27,10 +31,20 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         playerListView = (ListView) findViewById(R.id.playerListView);
-        List<Player> initialPlayers = new ArrayList<>();
-        for (int i = 0; i < INITIAL_PLAYERS_COUNT; i++) {
-            initialPlayers.add(new Player("Player " + (i + 1)));
+
+        List<Player> initialPlayers;
+        if (null != savedInstanceState && savedInstanceState.containsKey(SAVED_ADAPTER_INSTANCE)) {
+            initialPlayers = savedInstanceState.getParcelableArrayList(SAVED_ADAPTER_INSTANCE);
+            adapter = new PlayerArrayAdapter(this, R.layout.player, initialPlayers);
+        } else {
+            initialPlayers = new ArrayList<>();
+            for (int i = 0; i < INITIAL_PLAYERS_COUNT; i++) {
+                initialPlayers.add(new Player("Player " + (i + 1)));
+            }
+            adapter = new PlayerArrayAdapter(this, R.layout.player, initialPlayers);
         }
+
+        playerListView.setAdapter(adapter);
 
         Button addPlayerButton = (Button) findViewById(R.id.addPlayerButton);
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
@@ -65,9 +79,14 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+    }
 
-        adapter = new PlayerArrayAdapter(this, R.layout.player, initialPlayers);
-        playerListView.setAdapter(adapter);
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        ArrayList<Player> players = new ArrayList<>(adapter.getPlayers());
+        savedInstanceState.putParcelableArrayList(SAVED_ADAPTER_INSTANCE, players);
+
+        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override

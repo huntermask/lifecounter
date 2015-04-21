@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,28 +23,29 @@ import java.util.List;
  */
 public class PlayerArrayAdapter extends ArrayAdapter<Player> implements View.OnClickListener {
 
-    HashMap<Player, Integer> mIdMap = new HashMap<Player, Integer>();
+    List<Player> players = new ArrayList<>();
     private final Context context;
 
     public PlayerArrayAdapter(Context context, int resourceId,
                               List<Player> objects) {
         super(context, resourceId, objects);
-        for (int i = 0; i < objects.size(); ++i) {
-            mIdMap.put(objects.get(i), i);
-        }
+        this.players = objects;
         this.context = context;
+    }
+
+    public List<Player> getPlayers() {
+        return this.players;
     }
 
     @Override
     public long getItemId(int position) {
-        Player item = getItem(position);
-        return mIdMap.get(item);
+        return position;
     }
 
     @Override
     public void add(Player object) {
         super.add(object);
-        mIdMap.put(object, mIdMap.size());
+        players.add(object);
     }
 
     @Override
